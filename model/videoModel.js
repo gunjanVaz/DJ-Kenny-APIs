@@ -13,9 +13,9 @@ const VideoSchema = Schema({
     is_deleted:{type:Boolean,required:true,default:false},
     createdAt: { type: Date, default: Date.now() },
     updatedAt: { type: Date, default: Date.now() },
-    menu_id:{type: Schema.Types.ObjectId, ref: 'menu'},
-    category_id: {type: Schema.Types.ObjectId, ref: 'category'},
-    categoryitems_id:{type: Schema.Types.ObjectId, ref: 'categoryitems'},
+    menu_id:{type: Schema.Types.ObjectId, ref: 'menu',default:null},
+    category_id: {type: Schema.Types.ObjectId, ref: 'category',default:null},
+    categoryitems_id:{type: Schema.Types.ObjectId, ref: 'categoryitems',default:null},
 });
 
 
