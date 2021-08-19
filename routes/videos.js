@@ -13,4 +13,3 @@ router.put('/delete/:id',videoController.delete);
 
 module.exports = router
 
-module.exports = router

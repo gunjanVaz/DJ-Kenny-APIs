@@ -1,44 +1,43 @@
-const videoController = {}
+const radioController = {}
 const mongoose = require('mongoose')
-const { Videos } = require('../model/videoModel')
+const { Radio } = require('../model/radioModel')
 //controller to add data in category
-videoController.add = async (req, res) => {
+radioController.add = async (req, res) => {
     try {
-        const video = new Videos(req.body)
-        const videoIn = await Videos.find({
-            videos_name: video.videos_name,
-            videos_link: video.videos_link,
+        const radio = new Radio(req.body)
+        const radioIn = await Radio.find({
+            radio_name: radio.radio_name,
+            radio_link: radio.radio_link,
             is_deleted: false
         })
-        if (videoIn.length > 0) {
+        if (radioIn.length > 0) {
             let response = {
                 "status": 400,
-                "message:": "Item Exists"
+                "message:": "Radio Exists"
             }
             res.status(400).json(response)
         }
-        else if (!video.videos_name || !video.videos_link) {
+        else if (!radio.radio_name || !radio.radio_link) {
             let response = {
                 "status": 400,
-                "message": "Please Enter Name And Link Of The Video"
+                "message": "Please Enter Name And Link Of The Radio"
             }
             res.status(400).json(response)
         }
         else {
-            let AllVideos = await Videos.find({ is_deleted: false }).sort({ position: 1 })
+            let AllRadio = await Radio.find({ is_deleted: false }).sort({ position: 1 })
 
-            if (AllVideos.length == 0) {
-                video.position = 1
+            if (AllRadio.length == 0) {
+                radio.position = 1
             }
             else {
-                AllVideos.forEach(video => {
-
-                    video.position += 1
-                    video.save()
+                AllRadio.forEach(radio => {
+                    radio.position += 1
+                    radio.save()
                 })
             }
-            video.position = 1
-            await video.save((err) => {
+            radio.position = 1
+            await radio.save((err) => {
                 if (err) {
                     let response = {
                         "status": 500,
@@ -50,8 +49,8 @@ videoController.add = async (req, res) => {
                 else {
                     let response = {
                         "status": 200,
-                        "message": "Video Saved Successfully",
-                        data: video
+                        "message": "Radio Saved Successfully",
+                        data: radio
                     }
                     res.status(200).json(response)
                 }
@@ -83,21 +82,21 @@ videoController.add = async (req, res) => {
     }
 }
 
-videoController.getAll = async (req, res) => {
+radioController.getAll = async (req, res) => {
     try {
-        const videosIn = await Videos.find({ is_deleted: false })
-        if (videosIn.length > 0) {
+        const radiosIn = await Radio.find({ is_deleted: false })
+        if (radiosIn.length > 0) {
             let response = {
                 "status": 200,
-                "message": "Available Videos",
-                "data": videosIn
+                "message": "Available Radio",
+                "data": radiosIn
             }
             res.status(200).json(response)
         }
         else {
             let response = {
                 "status": 400,
-                "message": "No Video Available"
+                "message": "No Radio Available"
             }
         }
     }
@@ -126,24 +125,24 @@ videoController.getAll = async (req, res) => {
     }
 }
 
-videoController.update = async (req, res) => {
+radioController.update = async (req, res) => {
     try {
-        const videoId = mongoose.Types.ObjectId(req.params.id)
-        const video = await Videos.find({ _id: videoId, is_deleted: false })
-        if (video.length != 1) {
+        const radioId = mongoose.Types.ObjectId(req.params.id)
+        const radio = await Radio.find({ _id: radioId, is_deleted: false })
+        if (radio.length != 1) {
             let response = {
                 "status": 404,
-                "message": "Video Not Found",
+                "message": "Radio Not Found",
             }
             res.status(404).json(response)
         }
         else {
-            video[0].set(req.body)
-            let updatedVideo = await video[0].save();
+            radio[0].set(req.body)
+            let updatedRadio = await radio[0].save();
             let response = {
                 "status": 200,
-                "message": "Video Updated Successfully",
-                "Updated Video": updatedVideo
+                "message": "Radio Updated Successfully",
+                "Updated Radio": updatedRadio
             }
             res.status(200).json(response)
         }
@@ -172,24 +171,24 @@ videoController.update = async (req, res) => {
         }
     }
 }
-videoController.delete = async (req, res) => {
+radioController.delete = async (req, res) => {
     try {
-        const videoId = mongoose.Types.ObjectId(req.params.id)
-        const video = await Videos.find({ _id: videoId, is_deleted: false })
-        if (video.length != 1) {
+        const radioId = mongoose.Types.ObjectId(req.params.id)
+        const radio = await Radio.find({ _id: radioId, is_deleted: false })
+        if (radio.length != 1) {
             let response = {
                 "status": 404,
-                "message": "Video Not Found",
+                "message": "Radio Not Found",
             }
             res.status(404).json(response)
         }
         else {
-            video[0].set({ is_deleted: true })
-            let updatedVideo = await video[0].save();
+            radio[0].set({ is_deleted: true })
+            let updatedRadio = await radio[0].save();
             let response = {
                 "status": 200,
-                "message": "Video Deleted Successfully",
-                "data": updatedVideo
+                "message": "Radio Deleted Successfully",
+                "data": updatedRadio
             }
             res.status(200).json(response)
         }
@@ -219,4 +218,4 @@ videoController.delete = async (req, res) => {
     }
 }
 
-module.exports = videoController
+module.exports = radioController
