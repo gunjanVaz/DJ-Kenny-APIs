@@ -8,8 +8,8 @@ var smtpTransport = nodemailer.createTransport({
     ignoreTLS: false,
     secure: false,
     auth: {
-        user: "gunjan.stegowl@gmail.com",
-        pass: "gunjan@123"
+        user: process.env.EMAIL_ID,
+        pass: process.env.PASSWORD
     },
     tls:{rejectUnauthorized:false}
 });

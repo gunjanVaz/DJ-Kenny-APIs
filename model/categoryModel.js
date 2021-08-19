@@ -13,6 +13,19 @@ const CategorySchema = Schema({
     is_deleted: { type: Boolean, required: true, default: false },
 });
 
+const SubCategorySchema = Schema({
+    category_id: { type: Schema.Types.ObjectId, ref: 'category' },
+    menu_id: { type: Schema.Types.ObjectId, ref: 'menu' },
+    sub_category_image: { type: String, default: null },
+    sub_category_name: { type: String, default: null },
+    sub_category_for: { type: String, default: null },
+    image_status: { type: Boolean, required: true, default: 0 },
+    position: { type: Number, required: true, default: 0 },
+    createdAt: { type: Date, default: Date.now() },
+    updatedAt: { type: Date, default: Date.now() },
+    is_deleted: { type: Boolean, required: true, default: false },
+});
+
 const CategoryItemsSchema = Schema({
     menu_id: { type: Schema.Types.ObjectId, ref: 'menu' },
     category_id: { type: Schema.Types.ObjectId, ref: 'category' },
@@ -23,19 +36,6 @@ const CategoryItemsSchema = Schema({
     image_status: { type: Boolean, required: true, default: 0 },
     popup_video_status: { type: Boolean, required: true, default: 0 },
     position: { type: Number, required: true, default: 1 },
-    createdAt: { type: Date, default: Date.now() },
-    updatedAt: { type: Date, default: Date.now() },
-    is_deleted: { type: Boolean, required: true, default: false },
-});
-
-const SubCategorySchema = Schema({
-    category_id: { type: Schema.Types.ObjectId, ref: 'category' },
-    menu_id: { type: Schema.Types.ObjectId, ref: 'menu' },
-    sub_category_image: { type: String, default: null },
-    sub_category_name: { type: String, default: null },
-    sub_category_for: { type: String, default: null },
-    image_status: { type: Boolean, required: true, default: 0 },
-    position: { type: Number, required: true, default: 0 },
     createdAt: { type: Date, default: Date.now() },
     updatedAt: { type: Date, default: Date.now() },
     is_deleted: { type: Boolean, required: true, default: false },
