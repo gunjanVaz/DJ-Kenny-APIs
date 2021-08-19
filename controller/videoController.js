@@ -6,8 +6,8 @@ videoController.add = async (req, res) => {
     try {
         const video = new Videos(req.body)
         const videoIn = await Videos.find({
-            video_name: item.video_name,
-            video_link: item.video_link,
+            videos_name: video.videos_name,
+            videos_link: video.videos_link,
             is_deleted: false
         })
         if (videoIn.length > 0) {
@@ -17,7 +17,7 @@ videoController.add = async (req, res) => {
             }
             res.status(400).json(response)
         }
-        else if (!video.video_name || !video.video_link) {
+        else if (!video.videos_name || !video.videos_link) {
             let response = {
                 "status": 400,
                 "message": "Please Enter Name And Link Of The Video"
@@ -51,7 +51,7 @@ videoController.add = async (req, res) => {
                     let response = {
                         "status": 200,
                         "message": "Video Saved Successfully",
-                        data: item
+                        data: video
                     }
                     res.status(200).json(response)
                 }
@@ -130,7 +130,7 @@ videoController.update = async (req, res) => {
     try {
         const videoId = mongoose.Types.ObjectId(req.params.id)
         const video = await Videos.find({ _id: videoId, is_deleted: false })
-        if (videos.length != 1) {
+        if (video.length != 1) {
             let response = {
                 "status": 404,
                 "message": "Video Not Found",
