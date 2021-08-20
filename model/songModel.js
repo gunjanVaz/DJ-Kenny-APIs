@@ -8,6 +8,7 @@ const SongSchema = Schema({
     song_file: { type: String, default:null},
     song_duration: { type: String, default:null },
     likes_count:{type:Number, required:true, default:0},
+    likes_status:{type:Boolean, required:true, default:0},
     favourites_count:{type:Number, required:true, default:0},
     total_played:{type:Number, required:true, default:0},
     total_shared:{type:Number, required:true, default:0},
