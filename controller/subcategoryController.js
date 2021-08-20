@@ -44,6 +44,11 @@ subcategoryController.add = async (req, res) => {
             console.log(item.sub_category_for)
             await item.save((err) => {
                 if (err) {
+                    AllItems.forEach(item => {
+
+                        item.position -= 1
+                        item.save()
+                    })
                     let response = {
                         "status": 500,
                         "message": "Error In Saving Data",

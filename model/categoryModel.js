@@ -27,12 +27,12 @@ const SubCategorySchema = Schema({
 });
 
 const CategoryItemsSchema = Schema({
-    menu_id: { type: Schema.Types.ObjectId, ref: 'menu' },
-    category_id: { type: Schema.Types.ObjectId, ref: 'category' },
-    sub_category_id: { type: Schema.Types.ObjectId, ref: 'subcategory' },
-    song_id: { type: Schema.Types.ObjectId, ref: 'songs' },
-    video_id: { type: Schema.Types.ObjectId, ref: 'videos' },
-    radio_id: { type: Schema.Types.ObjectId, ref: 'radios' },
+    menu_id: { type: Schema.Types.ObjectId, ref: 'menu',default: null },
+    category_id: { type: Schema.Types.ObjectId, ref: 'category' ,default: null},
+    sub_category_id: { type: Schema.Types.ObjectId, ref: 'subcategory' ,default: null},
+    song_id: { type: Schema.Types.ObjectId, ref: 'songs' ,default: null},
+    video_id: { type: Schema.Types.ObjectId, ref: 'videos' ,default: null},
+    radio_id: { type: Schema.Types.ObjectId, ref: 'radios' ,default: null},
     image_status: { type: Boolean, required: true, default: 0 },
     popup_video_status: { type: Boolean, required: true, default: 0 },
     position: { type: Number, required: true, default: 1 },

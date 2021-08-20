@@ -41,6 +41,11 @@ songController.add = async (req, res) => {
             song.song_duration=dur
             await song.save((err) => {
                 if (err) {
+                    songs.forEach(sng => {
+
+                        sng.position -= 1
+                        sng.save()
+                    })
                     let response = {
                         "status": 400,
                         "message": "Error In Saving Data",

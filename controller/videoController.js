@@ -40,6 +40,12 @@ videoController.add = async (req, res) => {
             video.position = 1
             await video.save((err) => {
                 if (err) {
+                    AllVideos.forEach(video => {
+
+                        video.position -= 1
+                        video.save()
+                    })
+
                     let response = {
                         "status": 500,
                         "message": "Error In Saving Data",

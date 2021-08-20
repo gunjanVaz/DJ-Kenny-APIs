@@ -1,16 +1,18 @@
-const categoryController = {}
+const categoryItemController = {}
 const mongoose = require('mongoose')
-const { Category, CategoryItems, SubCategory } = require('../model/categoryModel')
-const { Videos } = require('../model/videoModel')
-const { Songs } = require('../model/songModel')
+const { CategoryItems } = require('../model/categoryModel')
+
 //controller to add an data in category
-categoryController.add = async (req, res) => {
+categoryItemController.add = async (req, res) => {
     try {
-        const item = new Category(req.body)
-        const itemIn = await Category.find({
+        const item = new CategoryItems(req.body)
+        const itemIn = await CategoryItems.find({
             menu_id: item.menu_id,
-            category_name: item.category_name,
-            category_for: item.category_for,
+            category_id: item.category_id,
+            sub_category_id: item.sub_category_id,
+            song_id: item.song_id,
+            video_id: item.video_id,
+            radio_id: item.radio_id,
             is_deleted: false
         })
         if (itemIn.length > 0) {
@@ -20,23 +22,15 @@ categoryController.add = async (req, res) => {
             }
             res.status(400).json(response)
         }
-        else if (!item.menu_id || !item.category_name || !item.category_for) {
-            let response = {
-                "status": 400,
-                "message": "Please Enter The menu id, category name, category for"
-            }
-            res.status(400).json(response)
-        }
         else {
-            item.category_for = req.body.category_for.toLowerCase()
-            let AllItems = await Category.find({ is_deleted: false }).sort({ position: 1 })
+            let AllItems = await CategoryItems.find({ is_deleted: false }).sort({ position: 1 })
             console.log(AllItems)
 
             if (AllItems.length == 0) {
                 item.position = 1
             }
             else {
-                AllItems.forEach(it => {
+                 AllItems.forEach(it => {
 
                     it.position += 1
                     console.log(it.position)
@@ -46,6 +40,7 @@ categoryController.add = async (req, res) => {
             item.position=1
             console.log(item)
             await item.save((err) => {
+                
                 if (err) {
                     AllItems.forEach(it => {
 
@@ -63,7 +58,7 @@ categoryController.add = async (req, res) => {
                 else {
                     let response = {
                         "status": 200,
-                        "message": "Item Saved Successfully",
+                        "message": "Category Item Saved Successfully",
                         data: item
                     }
                     res.status(200).json(response)
@@ -96,13 +91,13 @@ categoryController.add = async (req, res) => {
     }
 }
 
-categoryController.getAll = async (req, res) => {
+categoryItemController.getAll = async (req, res) => {
     try {
-        const itemsIn = await Category.find({ is_deleted: false })
+        const itemsIn = await CategoryItems.find({ is_deleted: false })
         if (itemsIn.length > 0) {
             let response = {
                 "status": 200,
-                "message": "Available Categories",
+                "message": "Available Category Items",
                 "data": itemsIn
             }
             res.status(200).json(response)
@@ -110,7 +105,7 @@ categoryController.getAll = async (req, res) => {
         else {
             let response = {
                 "status": 400,
-                "message": "No category Available"
+                "message": "No Category Item Available"
             }
         }
     }
@@ -139,24 +134,24 @@ categoryController.getAll = async (req, res) => {
     }
 }
 
-categoryController.updateCategory = async (req, res) => {
+categoryItemController.update = async (req, res) => {
     try {
-        const categoryId = mongoose.Types.ObjectId(req.params.id)
-        const category = await Category.find({ _id: categoryId, is_deleted: false })
-        if (category.length != 1) {
+        const categoryItemId = mongoose.Types.ObjectId(req.params.id)
+        const categoryItem = await CategoryItems.find({ _id: categoryItemId, is_deleted: false })
+        if (categoryItem.length != 1) {
             let response = {
                 "status": 404,
-                "message": "Category Not Found",
+                "message": "Category Item Not Found",
             }
             res.status(404).json(response)
         }
         else {
-            category[0].set(req.body)
-            let updatedCategory = await category[0].save();
+            categoryItem[0].set(req.body)
+            let updatedCategoryItem = await categoryItem[0].save();
             let response = {
                 "status": 200,
-                "message": "Category Updated Successfully",
-                "Updated Category": updatedCategory
+                "message": "Category Item Updated Successfully",
+                "Updated Category Item": updatedCategoryItem
             }
             res.status(200).json(response)
         }
@@ -185,24 +180,24 @@ categoryController.updateCategory = async (req, res) => {
         }
     }
 }
-categoryController.delete = async (req, res) => {
+categoryItemController.delete = async (req, res) => {
     try {
-        const categoryId = mongoose.Types.ObjectId(req.params.id)
-        const category = await Category.find({ _id: categoryId, is_deleted: false })
-        if (category.length != 1) {
+        const categoryItemId = mongoose.Types.ObjectId(req.params.id)
+        const categoryItem = await CategoryItems.find({ _id: categoryItemId, is_deleted: false })
+        if (categoryItem.length != 1) {
             let response = {
                 "status": 404,
-                "message": "Category Not Found",
+                "message": "Category Item Not Found",
             }
             res.status(404).json(response)
         }
         else {
-            category[0].set({ is_deleted: true })
-            let updatedCategory = await category[0].save();
+            categoryItem[0].set({ is_deleted: true })
+            let updatedCategoryItems = await categoryItem[0].save();
             let response = {
                 "status": 200,
-                "message": "Category Deleted Successfully",
-                "data": updatedCategory
+                "message": "Category Item Deleted Successfully",
+                "data": updatedCategoryItems
             }
             res.status(200).json(response)
         }
@@ -232,14 +227,14 @@ categoryController.delete = async (req, res) => {
     }
 }
 // controller to get videos category and tracks category response
-categoryController.get = async (req, res) => {
+categoryItemController.get = async (req, res) => {
     try {
         const menu_id = req.query.menu_id;
         const menu_type = req.query.menu_type;
         const page = parseInt(req.query.page)
         const limit = parseInt(req.query.limit)
         if (menu_type.toLowerCase() === 'videoscategory') {
-            const items = await Category.find({ category_for: 'videos', menu_id: menu_id, is_deleted: false })
+            const items = await CategoryItemsItems.find({ category_for: 'videos', menu_id: menu_id, is_deleted: false })
             if (page && limit) {
                 let startIndex = (page - 1) * limit
                 let endIndex = page * limit
@@ -247,7 +242,7 @@ categoryController.get = async (req, res) => {
                 const resultItems = items.slice(startIndex, endIndex)
                 let response = {
                     "status": 200,
-                    "message": "Available Videos Category",
+                    "message": "Available Videos CategoryItemsItems",
                     "data": resultItems,
                     "per_page": limit,
                     "current_page": page,
@@ -265,7 +260,7 @@ categoryController.get = async (req, res) => {
             }
         }
         else if (menu_type.toLowerCase() === 'trackscategory') {
-            const items = await Category.find({ category_for: 'tracks', menu_id: menu_id, is_deleted: false })
+            const items = await CategoryItemsItems.find({ category_for: 'tracks', menu_id: menu_id, is_deleted: false })
             if (page && limit) {
                 let startIndex = (page - 1) * limit
                 let endIndex = page * limit
@@ -273,7 +268,7 @@ categoryController.get = async (req, res) => {
                 const resultItems = items.slice(startIndex, endIndex)
                 let response = {
                     "status": 200,
-                    "message": "Available Tracks Category",
+                    "message": "Available Tracks CategoryItemsItems",
                     "data": resultItems,
                     "per_page": limit,
                     "current_page": page,
@@ -293,7 +288,7 @@ categoryController.get = async (req, res) => {
         else {
             let response = {
                 "status": 404,
-                "message": "No Such Category Available"
+                "message": "No Such CategoryItemsItems Available"
             }
             res.status(400).json(response)
         }
@@ -408,4 +403,4 @@ categoryController.get = async (req, res) => {
 //         }
 //     }
 // }
-module.exports = categoryController
+module.exports = categoryItemController

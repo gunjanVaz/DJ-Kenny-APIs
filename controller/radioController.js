@@ -39,6 +39,11 @@ radioController.add = async (req, res) => {
             radio.position = 1
             await radio.save((err) => {
                 if (err) {
+                    AllRadio.forEach(radio => {
+                        radio.position -= 1
+                        radio.save()
+                    })
+
                     let response = {
                         "status": 500,
                         "message": "Error In Saving Data",
