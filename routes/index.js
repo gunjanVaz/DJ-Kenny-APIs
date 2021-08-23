@@ -15,6 +15,7 @@ const categoryitem = require('./categoryItem');
 const videos = require('./videos');
 const radio = require('./radio');
 const menuitems = require('./menuitems');
+const catIt = require('./catIt');
 const booking = require('./booking');
 const biography = require('./biography');
 
@@ -33,6 +34,7 @@ router.use('/djkenny/api/videos', videos)
 router.use('/djkenny/api/radio', radio)
 router.use('/djkenny/api/booking', booking)
 router.use('/djkenny/api/menuitems', menuitems)
+router.use('/djkenny/api/categoryitems', catIt)
 router.use('/djkenny/api/biography', biography)
 
 module.exports = router;
