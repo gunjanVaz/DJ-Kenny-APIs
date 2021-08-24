@@ -232,8 +232,8 @@ userController.signIn = async (req, res) => {
                     res.status(500).json(response)
                 }
                 else {
-                    let accessToken = auth.generateToken({ email: user.email, password: user.password });
-                    let refreshToken = auth.generateRefreshToken({ email: user.email, password: user.password })
+                    let accessToken = auth.generateToken({id:user._id,  email: user.email, password: user.password });
+                    let refreshToken = auth.generateRefreshToken({id:user._id, email: user.email, password: user.password })
                     await user.set({
                         refreshToken: refreshToken
                     })
