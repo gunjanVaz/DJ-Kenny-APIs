@@ -63,7 +63,12 @@ catItController.get = async (req, res) => {
             }
         }
         else {
-
+            let response = {
+                "status": 400,
+                "message": "Category Not Found",
+                "data": items
+            }
+            res.status(200).json(response)
         }
     }
 
