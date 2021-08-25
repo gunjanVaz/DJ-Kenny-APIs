@@ -19,6 +19,8 @@ const catIt = require('./catIt');
 const cartItdetails = require('./cartItdetails');
 const likes = require('./likes');
 const booking = require('./booking');
+const playlist = require('./playlist');
+const playlistsongs = require('./playlistsongs');
 const biography = require('./biography');
 
 router.use('/djkenny/api/legalDetails', legalDetails)
@@ -39,6 +41,8 @@ router.use('/djkenny/api/menuitems', menuitems)
 router.use('/djkenny/api/categoryitems', catIt)
 router.use('/djkenny/api/categoryitemdetails', cartItdetails)
 router.use('/djkenny/api/likes', likes)
+router.use('/djkenny/api/playlist', playlist)
+router.use('/djkenny/api/playlistsongs', playlistsongs)
 router.use('/djkenny/api/biography', biography)
 
 module.exports = router;
