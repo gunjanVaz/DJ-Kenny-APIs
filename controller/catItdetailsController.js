@@ -104,7 +104,6 @@ catItdetailsController.get = async (req, res) => {
             res.status(200).json(response)
         }
     }
-
     catch (err) {
         let response = {
             "status": 500,

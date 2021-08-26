@@ -22,6 +22,8 @@ const booking = require('./booking');
 const playlist = require('./playlist');
 const playlistsongs = require('./playlistsongs');
 const biography = require('./biography');
+const subscription = require('./subscription');
+const links = require('./links');
 
 router.use('/djkenny/api/legalDetails', legalDetails)
 router.use('/djkenny/api/uploads', uploads)
@@ -44,5 +46,6 @@ router.use('/djkenny/api/likes', likes)
 router.use('/djkenny/api/playlist', playlist)
 router.use('/djkenny/api/playlistsongs', playlistsongs)
 router.use('/djkenny/api/biography', biography)
-
+router.use('/djkenny/api/subscription', subscription)
+router.use('/djkenny/api', links)
 module.exports = router;
