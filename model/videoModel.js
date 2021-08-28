@@ -6,6 +6,7 @@ const VideoSchema = Schema({
     videos_image: { type: String, default:null},
     videos_link: { type: String, default:null },
     likes_count:{type:Number, required:true, default:0},
+    likes_status:{type:Boolean, required:true, default:0},
     favourites_count:{type:Number, required:true, default:0},
     total_played:{type:Number, required:true, default:0},
     total_shared:{type:Number, required:true, default:0},

@@ -6,6 +6,7 @@ try {
     uploadsController.uploads = (req, res) => {
         console.log(req.file);
         res.status(200).send({
+            "status": 200,
             "message": "Image upload successfully.",
             "url": 'http://localhost:3000/djkenny/api/uploads/' + req.file.filename
         })

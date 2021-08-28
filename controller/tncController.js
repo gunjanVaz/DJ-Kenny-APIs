@@ -13,6 +13,7 @@ tncController.view = async (req, res) => {
         }
         else {
             res.send({
+                "status": 200,
                 "message": "Viewing terms and conditions.",
                 "terms_data": tncExists,
                 "privacy_data": ppExists
@@ -40,6 +41,7 @@ tncController.add = async (req, res) => {
                 description: req.body.privacyPolicy,
             })
             res.status(200).send({
+                "status": 200,
                 "message": "Legal Details Added.",
                 "terms_data": [tnc],
                 "privacy_data": [pp]
@@ -53,6 +55,7 @@ tncController.add = async (req, res) => {
             ppExists[0].save()
 
             res.status(200).send({
+                "status": 200,
                 "message": "Legal Details Updated.",
                 "terms_data": tncExists,
                 "privacy_data": ppExists
@@ -73,6 +76,7 @@ tncController.delete = async (req, res) => {
         tncExists[0].delete()
         ppExists[0].delete()
         res.status(200).send({
+            "status": 200,
             "message": "Deleted Successfully.",
         }
         )
