@@ -5,6 +5,8 @@ const VideoSchema = Schema({
     videos_description: { type: String, default:null},
     videos_image: { type: String, default:null},
     videos_link: { type: String, default:null },
+    livetv_status: {type:Boolean, required:true, default:0},
+    popup_status:{type:Boolean, required:true, default:0},
     likes_count:{type:Number, required:true, default:0},
     likes_status:{type:Boolean, required:true, default:0},
     favourites_count:{type:Number, required:true, default:0},

@@ -115,4 +115,33 @@ res.status(200).json(response)
     }
 }
 
+songController.getcount=async (req,res)=>{
+    try{
+        let Song= await Songs.find({ is_deleted: false ,_id:req.params.id})
+        if(Song.length==1){
+        let response={
+            "status": 200,
+            "message":"Sucess",
+            "total_played": Song[0].total_played
+        }
+res.status(200).json(response)
+    }
+    else{
+        let response={
+            "status": 400,
+            "message":"Song Not Found",
+        }
+res.status(400).json(response)
+    }
+}
+    catch (err) {
+        console.log(err)
+        let response = {
+            "status": 500,
+            "message": "Internal Server Error",
+            "Error": [err.message]
+        }
+        res.status(500).json(response)
+    }
+}
 module.exports = songController

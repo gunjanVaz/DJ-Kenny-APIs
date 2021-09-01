@@ -27,6 +27,9 @@ const subscription = require('./subscription');
 const links = require('./links');
 const fav = require('./fav');
 const slider = require('./slider');
+const homeitems = require('./homeitems');
+const headermenu = require('./headermenu');
+
 
 router.use('/djkenny/api/legalDetails', legalDetails)
 router.use('/djkenny/api/uploads', uploads)
@@ -54,5 +57,7 @@ router.use('/djkenny/api/subscription', subscription)
 router.use('/djkenny/api', links)
 router.use('/djkenny/api/favourite', fav)
 router.use('/djkenny/api', slider)
+router.use('/djkenny/api/homeitems', homeitems)
+router.use('/djkenny/api/headermenu', headermenu)
 
 module.exports = router;
